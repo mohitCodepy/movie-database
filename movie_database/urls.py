@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from django.urls import include, path, re_path
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('users/', include("users.api.urls"))
+    path("users/", include("users.api.urls")),
+    path("movie_and_cast/", include("movies_and_cast.api.urls")),
 ]
 
 
@@ -31,3 +32,27 @@ token_urls = [
 ]
 
 urlpatterns += token_urls
+
+
+# swagger setting
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Movie and Cast APIs",
+      default_version='v1',
+      description="APIs for movies, casts and users",
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
+
+swaggerpatterns = [
+   re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+   re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+urlpatterns += swaggerpatterns

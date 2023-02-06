@@ -6,3 +6,6 @@ djangorestframework-simplejwt==5.2.0
 # code fomatting
 black==22.8.0
 isort==5.10.1
+
+# drf-yasg
+drf-yasg==1.21.4
