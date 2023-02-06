@@ -39,3 +39,6 @@ Clone this repository and run the following commands in the project directory to
     python manage.py migrate
     python manage.py runserver
 
+## Swagger
+- http://127.0.0.1:8000/swagger/
+
