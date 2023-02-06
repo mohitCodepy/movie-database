@@ -1,0 +1,8 @@
+# django
+django==4.1.6
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.0
+
+# code fomatting
+black==22.8.0
+isort==5.10.1
